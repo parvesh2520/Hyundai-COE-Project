@@ -438,6 +438,8 @@ export default function App() {
     const out = runIntents(carRef.current, [intent], 'en', { speed: engine.speed });
     commit(out.state);
     if (out.state.ignition === 'off') { driverIdentified.current = false; }
+    // Picking a driver by hand identifies them: voice ID must not switch back to Default afterwards.
+    else if (intent.type === 'profile' && out.state.profile === intent.id) { driverIdentified.current = true; }
     if (out.toast && intent.type !== 'screen') setToast({ ...out.toast, id: nextId++ });
 
     // When the car powers on into ACC or ON mode
@@ -964,15 +966,6 @@ export default function App() {
         isOpen={addProfileOpen}
         onClose={() => setAddProfileOpen(false)}
         onProfileCreated={(np) => handleIntent({ type: 'profile', id: np.id })}
-      />
-      <AddProfileModal
-
-        isOpen={addProfileOpen}
-
-        onClose={() => setAddProfileOpen(false)}
-
-        onProfileCreated={(np) => handleIntent({ type: 'profile', id: np.id })}
-
       />
 
       <VoiceDock phase={livePhase} interim={speech.interim} heard={heard} reply={reply} error={speech.error ?? asrError}
