@@ -1215,6 +1215,8 @@ img.layer { object-fit: fill; }
 .wheel-rot svg { display: block; }
 .rim { cursor: grab; }
 .airbag { font: 600 5px system-ui, sans-serif; fill: #2b3038; letter-spacing: 0.2em; text-anchor: middle; }
+.myra-key { pointer-events: none; }
+.myra-label { font: 600 3.4px system-ui, sans-serif; fill: #d3e4f4; letter-spacing: 0.18em; text-anchor: middle; filter: drop-shadow(0 0 0.6px rgba(150, 205, 255, 0.5)); }
 .stalk { transition: transform 0.3s ease; }
 
 .glass { transition: transform 2.4s cubic-bezier(0.35, 0, 0.25, 1); }
