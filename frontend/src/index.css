@@ -2050,3 +2050,9 @@ img.layer { object-fit: fill; }
 @media (max-width: 720px) {
   .safe-exit { top: 64px; left: 16px; right: 16px; width: auto; max-height: calc(100vh - 80px); }
 }
+
+/* ------------------------------------------------------------------ Acoustic Shield loader (simulator styles: components/AcousticShield.css) */
+.acs-loading {
+  position: fixed; inset: 0; z-index: 60; display: grid; place-items: center;
+  background: #080a0e; color: var(--muted); font-size: 13px;
+}

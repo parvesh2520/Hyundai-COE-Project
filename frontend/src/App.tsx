@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
-import { Armchair, Car, ChevronDown, Fingerprint, Gauge, Languages, Monitor, Play, Plus, ScanFace, ShieldAlert, Sparkles, Square, Trash2 } from 'lucide-react';
+import { lazy, Suspense, useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
+import { Armchair, Car, ChevronDown, Ear, Fingerprint, Gauge, Languages, Monitor, Play, Plus, ScanFace, ShieldAlert, Sparkles, Square, Trash2 } from 'lucide-react';
 import type { CarState, ChatMessage, Intent, ProfileId, Toast } from './types';
 import { SCENES } from './scenes';
 import { getTimeGreeting, initialCar, runIntents } from './state/car';
@@ -16,6 +16,8 @@ import { SettingsMenu } from './components/SettingsMenu';
 import { BharatConnect } from './components/BharatConnect';
 import { DriverMonitor } from './components/DriverMonitor';
 import { SafeExitGuardian } from './components/SafeExitGuardian';
+// three.js is only downloaded when the simulator is opened.
+const AcousticShield = lazy(() => import('./components/AcousticShield'));
 import { Transcript } from './components/Transcript';
 import { SeatView } from './components/SeatView';
 import { PROFILES, removeProfile, useProfileIds, useProfiles } from './lib/profiles';
@@ -231,6 +233,8 @@ export default function App() {
   const [monitorOn, setMonitorOn] = useState(false);
   // Safe Exit Guardian owns a separate webcam session; keep it mutually exclusive with DriverMonitor.
   const [safeExitOpen, setSafeExitOpen] = useState(false);
+  // Acoustic Shield collision-prediction simulator (full-screen, components/AcousticShield.tsx).
+  const [acousticOpen, setAcousticOpen] = useState(false);
   const [teachingVoice, setTeachingVoice] = useState(false);
   const teachingRecRef = useRef<{ stop: () => Promise<Blob> } | null>(null);
   const [speakerStatus, setSpeakerStatus] = useState<SpeakerStatus | null>(null);
@@ -889,6 +893,8 @@ export default function App() {
               return next;
             });
           }} title="Local object detection for the Safe Exit Guardian demo"><ShieldAlert /><span>Safe Exit</span></button>
+          <button className={acousticOpen ? 'on' : ''} onClick={() => setAcousticOpen(true)}
+            title="Acoustic Shield Simulator: 3D collision prediction and pre-impact acoustic protection"><Ear /><span>Acoustic Shield</span></button>
           <button className={monitorOn ? 'on' : ''} onClick={() => {
             carAudio.unlock();
             setMonitorOn((v) => {
@@ -955,6 +961,12 @@ export default function App() {
       {view === 'seats' && <SeatView car={car} onIntent={handleIntent} />}
 
       {safeExitOpen && <SafeExitGuardian onClose={() => setSafeExitOpen(false)} />}
+
+      {acousticOpen && (
+        <Suspense fallback={<div className="acs-loading">Loading Acoustic Shield Simulator…</div>}>
+          <AcousticShield onClose={() => setAcousticOpen(false)} />
+        </Suspense>
+      )}
 
       {monitorOn && <DriverMonitor onClose={() => setMonitorOn(false)} />}
 
