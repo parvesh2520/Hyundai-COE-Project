@@ -250,6 +250,12 @@ export function Wheel({ car, onIntent, onMic }: { car: CarState; onIntent: (i: I
             <Key x={col('left', 'inner')} y={KEY_ROWS[2]} label="Next track" onClick={() => onIntent({ type: 'media.skip', dir: 1 })}>
               <path d="M3.5 -3.5 L3.5 3.5 M-3 -3.5 L2 0 L-3 3.5 Z" />
             </Key>
+            {/* Myra key under the left pad: cosmetic for now, no action */}
+            <g className="myra-key" aria-hidden="true">
+              <rect x="1403.2" y="507.7" width="29.6" height="8.6" rx="2.6" fill="#030304" />
+              <rect x="1404" y="508.5" width="28" height="7" rx="2.2" fill="url(#w-key)" stroke="#2a2e35" strokeWidth="0.5" />
+              <text x="1418" y="513.4" className="myra-label">Myra</text>
+            </g>
 
             {/* Right spoke: voice, phone, climate, cluster pages */}
             <Key x={col('right', 'inner')} y={KEY_ROWS[0]} label="Voice assistant" onClick={onMic}>

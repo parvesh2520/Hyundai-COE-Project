@@ -7,19 +7,21 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
-    "test": "node --experimental-strip-types --test src/lib/safeExit.test.ts",
+    "test": "node --experimental-strip-types --test src/lib/safeExit.test.ts src/acoustic/acoustic.test.ts",
     "preview": "vite preview"
   },
   "dependencies": {
     "@mediapipe/tasks-vision": "^0.10.21",
     "lucide-react": "^1.59.0",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "three": "^0.187.0"
   },
   "devDependencies": {
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
+    "@types/three": "^0.187.0",
     "@vitejs/plugin-react": "^6.1.1",
     "oxlint": "^1.81.0",
     "typescript": "~6.0.2",
